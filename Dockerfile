@@ -54,7 +54,6 @@ WORKDIR /usr/src
 COPY --from=api /usr/src/api /usr/src/api
 COPY --from=ui /usr/src/ui /usr/src/ui
 
-RUN addgroup --gid 9999 ohmyform && adduser -D --uid 9999 -G ohmyform ohmyform
 ENV SECRET_KEY=ChangeMe \
     CREATE_ADMIN=FALSE \
     ADMIN_EMAIL=admin@ohmyform.com \

@@ -36,6 +36,12 @@ spec:
               value: smtp://local.host
             - name: LOGIN_NOTE
               value: "Either login with admin:admin or create your own account to test OhMyForm"
+          volumeMounts:
+            - mountPath: "/data"
+              name: "cache-volume"
+        volumes:
+          - name: "cache-volume"
+            emptyDir: {}
   strategy:
     type: Rolling
     rollingParams:
