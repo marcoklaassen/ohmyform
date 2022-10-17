@@ -1,0 +1,48 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  namespace: ohmyform
+  name: ohmyform
+spec:
+  selector:
+    app: ohmyform
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ohmyform
+    spec:
+      containers:
+        - name: ohmyform
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/ohmyform/ohmyform:latest
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          env:
+            - name: CREATE_ADMIN
+              value: "true"
+            - name: ADMIN_EMAIL
+              value: "admin@local.host"
+            - name: ADMIN_USERNAME
+              value: admin
+            - name: ADMIN_PASSWORD
+              value: admin
+            - name: DATABASE_DRIVER
+              value: sqlite
+            - name: DATABASE_URL
+              value: "sqlite:///data/data.sqlite"
+            - name: MAILER_URI
+              value: smtp://local.host
+            - name: LOGIN_NOTE
+              value: "Either login with admin:admin or create your own account to test OhMyForm"
+  strategy:
+    type: Rolling
+    rollingParams:
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+  triggers:
+    - type: ConfigChange
