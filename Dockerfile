@@ -34,7 +34,6 @@ RUN curl -sf https://gobinaries.com/tj/node-prune | sh
 COPY api/ .
 
 RUN touch /usr/src/api/src/schema.gql && chown 1001:0 /usr/src/api/src/schema.gql
-USER 1001
 
 RUN yarn install --frozen-lockfile
 RUN yarn build
@@ -69,5 +68,6 @@ RUN touch /usr/src/supervisord.log && chmod 777 /usr/src/supervisord.log
 COPY supervisord.conf /etc/supervisord.conf
 COPY nginx.conf /etc/nginx/nginx.conf
 
+USER 1001
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
 # CMD [ "yarn", "start:prod" ]
