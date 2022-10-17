@@ -33,8 +33,8 @@ RUN curl -sf https://gobinaries.com/tj/node-prune | sh
 
 COPY api/ .
 
-USER 1001
 RUN touch /usr/src/api/src/schema.gql && chown 1001:0 /usr/src/api/src/schema.gql
+USER 1001
 
 RUN yarn install --frozen-lockfile
 RUN yarn build
